@@ -1,6 +1,17 @@
-import { AppSettings, ThemeConfig, EventConfig } from '../types/photobooth';
+import { AppSettings, ThemeConfig, EventConfig, WeddingConfig } from '../types/photobooth';
 
 export const THEME_PRESETS: ThemeConfig[] = [
+  {
+    id: 'wedding-minimalist',
+    name: 'Wedding Minimalist — White Elegance',
+    bgGradient: 'from-stone-100 via-white to-amber-50/50',
+    panelBg: 'rgba(255, 255, 255, 0.94)',
+    accentColor: '#c5a059',
+    accentGradient: 'from-amber-300 via-amber-500 to-yellow-600',
+    textColor: '#292524',
+    fontFamily: 'serif',
+    isDark: false,
+  },
   {
     id: 'midnight-glow',
     name: 'Midnight Studio (Dark)',
@@ -58,50 +69,60 @@ export const THEME_PRESETS: ThemeConfig[] = [
   },
 ];
 
+export const DEFAULT_WEDDING_CONFIG: WeddingConfig = {
+  coupleNames: 'Sarah & Dimas',
+  weddingDate: '24.10.2026',
+  accentColor: '#c5a059', // Champagne Gold
+  ornament: 'floral',
+  subtext: 'The Wedding of',
+  venueText: 'Grand Ballroom Jakarta',
+};
+
 /** Generate sample transparent PNG frame overlay for Wedding */
 export function generateSampleWeddingOverlay(): string {
   if (typeof document === 'undefined') return '';
   const canvas = document.createElement('canvas');
-  canvas.width = 800;
-  canvas.height = 2400;
+  canvas.width = 1200;
+  canvas.height = 1800;
   const ctx = canvas.getContext('2d');
   if (!ctx) return '';
 
-  // Clear with 100% transparent alpha
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Elegant golden border frame around the outer edge
-  ctx.strokeStyle = '#d4af37';
-  ctx.lineWidth = 14;
-  ctx.strokeRect(16, 16, canvas.width - 32, canvas.height - 32);
-
-  ctx.strokeStyle = '#fef08a';
-  ctx.lineWidth = 3;
+  // Elegant golden border frame
+  ctx.strokeStyle = '#c5a059';
+  ctx.lineWidth = 10;
   ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
 
-  // Top Wedding Header in Gold Foil
-  ctx.fillStyle = '#ffffff';
-  ctx.textAlign = 'center';
-  ctx.font = 'bold 36px "Playfair Display", Georgia, serif';
-  ctx.fillText('THE WEDDING OF', canvas.width / 2, 85);
+  ctx.strokeStyle = '#e6ca85';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(44, 44, canvas.width - 88, canvas.height - 88);
 
-  ctx.fillStyle = '#fef08a';
-  ctx.font = 'italic 52px "Playfair Display", Georgia, serif';
-  ctx.fillText('Sarah & Dimas', canvas.width / 2, 145);
+  // Top Wedding Header in Gold Foil
+  ctx.fillStyle = '#c5a059';
+  ctx.textAlign = 'center';
+  ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
+  ctx.letterSpacing = '0.3em';
+  ctx.fillText('THE WEDDING OF', canvas.width / 2, 90);
+
+  ctx.fillStyle = '#1c1917';
+  ctx.font = 'bold 44px "Playfair Display", Georgia, serif';
+  ctx.fillText('Sarah & Dimas', canvas.width / 2, 142);
 
   // Decorative corner floral ornaments
-  ctx.font = '40px serif';
-  ctx.fillText('✨ 🕊️ ✨', canvas.width / 2, 195);
+  ctx.font = '24px serif';
+  ctx.fillText('🌿 ✨ 🌿', canvas.width / 2, 178);
 
   // Footer Wedding Details
-  const footerY = 2240;
-  ctx.fillStyle = '#fef08a';
-  ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('14 OCTOBER 2026', canvas.width / 2, footerY);
+  const footerY = 1730;
+  ctx.fillStyle = '#c5a059';
+  ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
+  ctx.letterSpacing = '0.2em';
+  ctx.fillText('24 OCTOBER 2026', canvas.width / 2, footerY);
 
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'italic 28px "Playfair Display", Georgia, serif';
-  ctx.fillText('#SarahDimasForever', canvas.width / 2, footerY + 45);
+  ctx.fillStyle = '#78716c';
+  ctx.font = 'italic 16px "Playfair Display", Georgia, serif';
+  ctx.fillText('#SarahDimasForever · Grand Ballroom Jakarta', canvas.width / 2, footerY + 28);
 
   return canvas.toDataURL('image/png');
 }
@@ -110,8 +131,8 @@ export function generateSampleWeddingOverlay(): string {
 export function generateSampleTechOverlay(): string {
   if (typeof document === 'undefined') return '';
   const canvas = document.createElement('canvas');
-  canvas.width = 1000;
-  canvas.height = 1250;
+  canvas.width = 1200;
+  canvas.height = 1800;
   const ctx = canvas.getContext('2d');
   if (!ctx) return '';
 
@@ -120,26 +141,26 @@ export function generateSampleTechOverlay(): string {
   // Modern tech grid neon frame
   ctx.strokeStyle = '#38bdf8';
   ctx.lineWidth = 8;
-  ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+  ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
 
   // Top Banner
   ctx.fillStyle = '#38bdf8';
   ctx.font = '900 36px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('SAI TECH SUMMIT 2026', canvas.width / 2, 70);
+  ctx.fillText('SAI TECH SUMMIT 2026', canvas.width / 2, 90);
 
   ctx.fillStyle = '#a855f7';
   ctx.font = '600 18px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('INNOVATION & FUTURE INTELLIGENCE', canvas.width / 2, 102);
+  ctx.fillText('INNOVATION & FUTURE INTELLIGENCE', canvas.width / 2, 126);
 
   // Footer Banner
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 22px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('JAKARTA INTERNATIONAL EXPO', canvas.width / 2, 1180);
+  ctx.font = '700 20px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('JAKARTA INTERNATIONAL EXPO', canvas.width / 2, 1720);
 
   ctx.fillStyle = '#38bdf8';
-  ctx.font = '500 16px monospace';
-  ctx.fillText('OFFICIAL ATTENDEE PHOTOBOOTH · PASS #8492', canvas.width / 2, 1210);
+  ctx.font = '500 14px monospace';
+  ctx.fillText('OFFICIAL ATTENDEE PHOTOBOOTH · PASS #8492', canvas.width / 2, 1748);
 
   return canvas.toDataURL('image/png');
 }
@@ -149,21 +170,21 @@ export const DEFAULT_EVENTS: EventConfig[] = [
     id: 'event-wedding-sarah-dimas',
     name: 'Wedding of Sarah & Dimas',
     subtitle: 'Grand Ballroom Hotel Mulia Jakarta',
-    date: '14/10/2026',
+    date: '24.10.2026',
     welcomeHeadline: 'Welcome to the Wedding of',
     welcomeSubheadline: 'Sarah & Dimas · Capture your happiest moments!',
     footerText: '#SarahDimasForever · Thank you for celebrating with us',
-    photoCount: 3,
-    layoutType: 'strip-3',
-    primaryColor: '#eab308',
-    themeId: 'royal-gold',
+    photoCount: 4,
+    layoutType: 'strip-4',
+    primaryColor: '#c5a059',
+    themeId: 'wedding-minimalist',
     createdAt: Date.now() - 86400000,
   },
   {
     id: 'event-tech-summit',
     name: 'SAI Tech Summit 2026',
     subtitle: 'Innovation Stage & Exhibition Hall',
-    date: '20/11/2026',
+    date: '20.11.2026',
     welcomeHeadline: 'SAI Tech Summit 2026',
     welcomeSubheadline: 'Take your VIP Attendee badge photostrip!',
     footerText: 'Powered by SAI Studio Booth · Jakarta Expo',
@@ -177,7 +198,7 @@ export const DEFAULT_EVENTS: EventConfig[] = [
     id: 'event-sweet-seventeen',
     name: 'Sweet 17th of Michelle',
     subtitle: 'Glitz & Glam Party Night',
-    date: '05/12/2026',
+    date: '05.12.2026',
     welcomeHeadline: 'Michelle is Turning 17! 💖',
     welcomeSubheadline: 'Pose with your besties and grab your photostrip',
     footerText: 'Best Night Ever · #MichelleSweet17',
@@ -197,21 +218,23 @@ export const DEFAULT_SETTINGS: AppSettings = {
     cameraCountdown: 3,
     mirrorCamera: true,
     soundEnabled: true,
-    themeId: 'midnight-glow',
+    themeId: 'wedding-minimalist',
   },
   kiosk: {
     welcomeTitle: 'Haii... Abadikan momentmu yuk!',
-    welcomeSubtitle: 'Siapkan pose terbaikmu dan buat photostrip estetik yang bisa kamu bawa pulang.',
+    welcomeSubtitle: 'Siapkan pose terbaikmu dan buat photostrip estetik 4R yang bisa kamu bawa pulang.',
     startButtonText: 'Mulai Sesi Foto',
     countdownDuration: 3,
     autoResetTimeoutSeconds: 60,
     enableAutoReset: true,
-    themeId: 'midnight-glow',
+    themeId: 'wedding-minimalist',
     showQRIS: true,
     allowFilterSelection: true,
     allowFrameCustomization: true,
+    defaultLayout4R: 'double_strip_4r',
   },
   activeEventId: 'event-wedding-sarah-dimas',
+  wedding: DEFAULT_WEDDING_CONFIG,
   events: DEFAULT_EVENTS,
   themes: THEME_PRESETS,
 };

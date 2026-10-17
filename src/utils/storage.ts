@@ -1,7 +1,7 @@
 import { AppSettings, EventConfig, ThemeConfig } from '../types/photobooth';
-import { DEFAULT_SETTINGS, generateSampleWeddingOverlay, generateSampleTechOverlay } from './defaultData';
+import { DEFAULT_SETTINGS, THEME_PRESETS, generateSampleWeddingOverlay, generateSampleTechOverlay } from './defaultData';
 
-const STORAGE_KEY = 'sai_photobooth_settings_v3';
+const STORAGE_KEY = 'sai_photobooth_settings_v4';
 
 export function loadSettings(): AppSettings {
   if (typeof window === 'undefined') return DEFAULT_SETTINGS;
@@ -26,14 +26,24 @@ export function loadSettings(): AppSettings {
       return initial;
     }
     const parsed = JSON.parse(raw) as AppSettings;
-    // Merge safely with defaults to prevent missing fields
+
+    // Merge themes to ensure new theme presets like wedding-minimalist are always present
+    const existingThemes = parsed.themes || [];
+    const mergedThemes = [...THEME_PRESETS];
+    existingThemes.forEach((t) => {
+      if (!mergedThemes.some((mt) => mt.id === t.id)) {
+        mergedThemes.push(t);
+      }
+    });
+
     return {
       ...DEFAULT_SETTINGS,
       ...parsed,
       general: { ...DEFAULT_SETTINGS.general, ...(parsed.general || {}) },
       kiosk: { ...DEFAULT_SETTINGS.kiosk, ...(parsed.kiosk || {}) },
+      wedding: { ...DEFAULT_SETTINGS.wedding, ...(parsed.wedding || {}) },
       events: parsed.events && parsed.events.length > 0 ? parsed.events : DEFAULT_SETTINGS.events,
-      themes: parsed.themes && parsed.themes.length > 0 ? parsed.themes : DEFAULT_SETTINGS.themes,
+      themes: mergedThemes,
     };
   } catch (err) {
     console.error('Failed to load settings from storage, using defaults:', err);
