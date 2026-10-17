@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+}
+
+.font-serif-title {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Ambient glow background animations */
+@keyframes orb-float-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.1); }
+  100% { transform: translate(-40px, 80px) scale(0.95); }
+}
+
+@keyframes orb-float-2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, -30px) scale(1.08); }
+  100% { transform: translate(40px, -60px) scale(0.92); }
+}
+
+.animate-orb-1 {
+  animation: orb-float-1 22s infinite alternate ease-in-out;
+}
+
+.animate-orb-2 {
+  animation: orb-float-2 26s infinite alternate ease-in-out;
+}
+
+/* Glassmorphism surfaces */
+.glass-panel {
+  background: rgba(23, 23, 23, 0.65);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+/* Photo filters */
+.filter-normal { filter: none; }
+.filter-bw { filter: grayscale(100%) contrast(115%) brightness(98%); }
+.filter-sepia { filter: sepia(70%) contrast(105%) brightness(95%); }
+.filter-warm { filter: sepia(25%) saturate(140%) hue-rotate(-8deg) contrast(105%); }
+.filter-cool { filter: contrast(115%) saturate(120%) hue-rotate(12deg) brightness(102%); }
+.filter-film { filter: contrast(120%) brightness(105%) saturate(85%) sepia(15%); }
+.filter-glow { filter: contrast(105%) brightness(112%) saturate(115%); }
+
+/* Print styling */
+#printOnly {
+  display: none;
+}
+
+@media print {
+  html, body {
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+  
+  body > * {
+    display: none !important;
+  }
+  
+  #printOnly {
+    display: flex !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #printImage {
+    display: block !important;
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: 100vh !important;
+    height: auto !important;
+    object-fit: contain !important;
+    margin: 0 auto !important;
+  }
+  
+  @page {
+    margin: 0;
+    size: auto;
+  }
+}

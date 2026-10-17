@@ -1,0 +1,6 @@
+{
+  "name": "SAI Studio - Aesthetic Self Photo Booth",
+  "description": "Aesthetic Korean-style self photo booth kiosk with live camera capture, filters, custom frames, QRIS payment, print layout, and QR download.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
